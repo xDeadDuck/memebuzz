@@ -26,7 +26,11 @@
 
         async function connectXPortal() {
             log("Connecting xPortal...");
-            const xPortal = window.Maiar || window.xPortal;
+            const xPortal = window.Maiar || window.xPortal || window.elrondWallet; // Broader check
+            console.log("xPortal:", xPortal);
+            console.log("window.Maiar:", window.Maiar);
+            console.log("window.xPortal:", window.xPortal);
+            console.log("window.elrondWallet:", window.elrondWallet);
             if (xPortal) {
                 provider = new window.Maiar.WalletConnectProvider();
                 try {
@@ -40,7 +44,7 @@
                 }
             } else {
                 log("xPortal not found!");
-                alert("Install xPortal: chrome.google.com/webstore");
+                alert("xPortal not detected. Open extension, ensure Testnet, refresh, or reinstall.");
                 window.open("https://chrome.google.com/webstore/detail/xportal/kmdnhlobepocfnhipclmgbhngbjafbed", "_blank");
             }
         }
@@ -72,7 +76,7 @@
         }
 
         log("Script loaded!");
-        console.log("Initial xPortal check:", window.Maiar || window.xPortal);
+        console.log("Initial checks - Maiar:", window.Maiar, "xPortal:", window.xPortal, "elrondWallet:", window.elrondWallet);
     </script>
 </body>
 </html>
