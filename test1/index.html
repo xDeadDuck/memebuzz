@@ -39,7 +39,7 @@
         const payBtn = document.getElementById('payBtn');
         payBtn.addEventListener('click', async () => {
           const transaction = {
-            value: "70000000000000000", // 0.07 EGLD
+            value: "70000000000000000",
             receiver: "erd1f48rayfnkqn48yjkm2macdgl7gpveq2359jayuez6fm2rc2ppekqwx9r4z",
             gasLimit: 50000,
             chainID: "T"
@@ -53,7 +53,7 @@
           }
         });
       } else {
-        console.log('xPortal extension not found - install or enable it!');
+        console.log('xPortal extension not found - check installation or permissions!');
       }
     });
   </script>
