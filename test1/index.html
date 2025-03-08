@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MemeBuzz Test</title>
+  <script src="https://unpkg.com/@multiversx/sdk-core@latest/out/index.browser.js"></script>
+  <script src="https://unpkg.com/@multiversx/sdk-extension-provider@latest/out/main.js"></script>
+</head>
+<body>
+  <h1>MemeBuzz</h1>
+  <p>Script loaded!</p>
+  <button id="connectBtn">Connect xPortal</button>
+  <button id="payBtn" disabled>Pay 0.07 EGLD</button>
+  <script>
+    console.log("Script loaded!");
+
+    window.addEventListener('load', async () => {
+      console.log('Checking for xPortal...');
+      const provider = window.MultiversX?.ExtensionProvider?.getInstance();
+      if (provider) {
+        console.log('xPortal extension detected!');
+        try {
+          await provider.init();
+          console.log('xPortal initialized!');
+        } catch (err) {
+          console.log('Init error:', err);
+        }
+
+        const connectBtn = document.getElementById('connectBtn');
+        connectBtn.addEventListener('click', async () => {
+          try {
+            const address = await provider.login({ chainId: 'T' });
+            console.log('Connected! Address:', address);
+            document.getElementById('payBtn').disabled = false;
+          } catch (err) {
+            console.log('Login error:', err);
+          }
+        });
+
+        const payBtn = document.getElementById('payBtn');
+        payBtn.addEventListener('click', async () => {
+          const transaction = {
+            value: "70000000000000000", // 0.07 EGLD
+            receiver: "erd1f48rayfnkqn48yjkm2macdgl7gpveq2359jayuez6fm2rc2ppekqwx9r4z",
+            gasLimit: 50000,
+            chainID: "T"
+          };
+          try {
+            const tx = new window.MultiversX.Transaction(transaction);
+            const result = await provider.signAndSendTransaction(tx);
+            console.log('Payment sent! Tx:', result);
+          } catch (err) {
+            console.log('Payment error:', err);
+          }
+        });
+      } else {
+        console.log('xPortal extension not found - install or enable it!');
+      }
+    });
+  </script>
+</body>
+</html>
