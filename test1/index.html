@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>MemeBuzz Test</title>
-  <script src="https://unpkg.com/@multiversx/sdk-core@latest/out/index.browser.js"></script>
-  <script src="https://unpkg.com/@multiversx/sdk-extension-provider@latest/out/main.js"></script>
+  <script src="https://unpkg.com/@multiversx/sdk-core@latest/out/index.browser.js" onload="console.log('sdk-core loaded')" onerror="console.log('sdk-core failed')"></script>
+  <script src="https://unpkg.com/@multiversx/sdk-extension-provider@latest/out/main.js" onload="console.log('sdk-extension-provider loaded')" onerror="console.log('sdk-extension-provider failed')"></script>
 </head>
 <body>
   <h1>MemeBuzz</h1>
@@ -15,6 +15,8 @@
 
     window.addEventListener('load', async () => {
       console.log('Checking for xPortal...');
+      console.log('window.MultiversX:', typeof window.MultiversX);
+      console.log('ExtensionProvider:', window.MultiversX?.ExtensionProvider);
       const provider = window.MultiversX?.ExtensionProvider?.getInstance();
       if (provider) {
         console.log('xPortal extension detected!');
